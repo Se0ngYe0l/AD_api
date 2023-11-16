@@ -11,9 +11,9 @@ from Ganomaly.transform import data_transform
 from .utils import download_img
 
 path = "./Ganomaly/75_netG.pth"
-pretrained_dict = torch.load(path)['state_dict']
 device = torch.device("cuda:0")
 netg = NetG().to(device)
+pretrained_dict = torch.load(path)['state_dict']
 netg.load_state_dict(pretrained_dict)
 
 
@@ -42,11 +42,10 @@ def model_func(file_name):
         error = np.squeeze(error)
         error = error.tolist()
         
-        #return error
-
         min = 0.0004461664648260921
         max = 0.029765909537672997
         threshold = 0.43434194
+        
         an_score = (error - min) / (max - min)
         if an_score >= threshold:
             return 1
